@@ -5,7 +5,9 @@ import * as Yup from 'yup';
 const WifiFormValidationSchema = Yup.object().shape({
   ssid: Yup.string().required('SSID is required'),
   encryption: Yup.string().required('Encryption is Required'),
-  password: Yup.string().required('Password is Required'),
+  password: Yup.string()
+    .min(8, 'Password must be minimum 8 digit long')
+    .required('Password is Required'),
   size: Yup.number()
     .min(300, 'Size is too small')
     .max(500, 'Size is too big!')
@@ -87,8 +89,8 @@ export const WifiFormContainer = props => (
           </div>
           <div className="control">
             <br />
-            <button type="submit" className="button " disabled={isSubmitting}>
-              Submit
+            <button type="submit" className="button is-primary" disabled={!!Object.keys(errors).length || isSubmitting}>
+              Generate QR Code
             </button>
           </div>
         </Form>
